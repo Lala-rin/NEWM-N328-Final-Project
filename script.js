@@ -99,10 +99,10 @@ function updateVisualizations() {
   populateTable(filteredData);
 }
 
-function getSvg(svgId, chartKey) {
+function getSvg(svgId, configKey, containerId) {
   const svg = d3.select('#' + svgId);
-  const config = chartConfig[chartKey];
-  const container = document.getElementById(chartKey).parentElement;
+  const config = chartConfig[configKey];
+  const container = document.getElementById(containerId);
   const width = Math.max(container.clientWidth || config.width, 320);
   const height = config.height;
   const margin = config.margin;
@@ -114,7 +114,7 @@ function getSvg(svgId, chartKey) {
 function drawScatterPlot(data) {
   const filtered = data.filter((item) => Number(item.members) > 0 && Number(item.score) > 0);
   const sample = filtered.slice(0, 1500);
-  const chart = getSvg('scatterPlot', 'scatter');
+  const chart = getSvg('scatterPlot', 'scatter', 'scatterContainer');
   const g = chart.svg.append('g').attr('transform', 'translate(' + chart.margin.left + ',' + chart.margin.top + ')');
 
   if (!sample.length) {
@@ -159,7 +159,7 @@ function drawScatterPlot(data) {
 }
 
 function drawTypeChart(data) {
-  const chart = getSvg('typeChart', 'type');
+  const chart = getSvg('typeChart', 'type', 'typeContainer');
   const g = chart.svg.append('g').attr('transform', 'translate(' + chart.margin.left + ',' + chart.margin.top + ')');
 
   const counts = Array.from(d3.rollup(data, (values) => values.length, (d) => d.type), ([type, count]) => ({ type, count })).sort((a, b) => d3.descending(a.count, b.count));
@@ -187,7 +187,7 @@ function drawTypeChart(data) {
 }
 
 function drawTrendChart(data) {
-  const chart = getSvg('trendChart', 'trend');
+  const chart = getSvg('trendChart', 'trend', 'trendContainer');
   const g = chart.svg.append('g').attr('transform', 'translate(' + chart.margin.left + ',' + chart.margin.top + ')');
 
   const yearlyCounts = Array.from(d3.rollup(data, (values) => values.length, (d) => Number(d.year)))
@@ -218,7 +218,7 @@ function drawTrendChart(data) {
 }
 
 function drawGenreChart(data) {
-  const chart = getSvg('genreChart', 'genre');
+  const chart = getSvg('genreChart', 'genre', 'genreContainer');
   const g = chart.svg.append('g').attr('transform', 'translate(' + chart.margin.left + ',' + chart.margin.top + ')');
 
   const genreCounts = new Map();
