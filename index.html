@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Dataset Interactive Dashboard - D3</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Anime Dataset Interactive Dashboard</h1>
+            <p>Explore 24,905+ anime titles with D3 visualizations</p>
+        </header>
+
+        <aside class="sidebar">
+            <h2>Filters</h2>
+            
+            <label>Year Range:</label>
+            <div class="filter-row">
+                <label for="yearMin" class="filter-label">From</label>
+                <input type="number" id="yearMin" min="1960" max="2024" value="1960" step="1">
+            </div>
+            <div class="filter-row">
+                <label for="yearMax" class="filter-label">To</label>
+                <input type="number" id="yearMax" min="1960" max="2024" value="2024" step="1">
+            </div>
+
+            <label>Type:</label>
+            <select id="typeFilter">
+                <option value="All">All</option>
+            </select>
+
+            <label>Minimum Score:</label>
+            <input type="number" id="scoreMin" min="0" max="10" value="0" step="0.1">
+
+            <button id="updateBtn">Update Visualization</button>
+
+            <div class="stats">
+                <h3>Dataset Stats</h3>
+                <p>Total Rows: <strong id="totalRows">-</strong></p>
+                <p>Filtered Rows: <strong id="filteredRows">-</strong></p>
+            </div>
+        </aside>
+
+        <main>
+            <div class="dashboard-grid">
+                <div class="chart-container" id="scatterContainer">
+                    <h3>Score vs Popularity (Members)</h3>
+                    <svg id="scatterPlot"></svg>
+                </div>
+
+                <div class="chart-container" id="typeContainer">
+                    <h3>Anime Count by Type</h3>
+                    <svg id="typeChart"></svg>
+                </div>
+
+                <div class="chart-container" id="trendContainer">
+                    <h3>Anime Released by Year</h3>
+                    <svg id="trendChart"></svg>
+                </div>
+
+                <div class="chart-container" id="genreContainer">
+                    <h3>Top 15 Genres</h3>
+                    <svg id="genreChart"></svg>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>Filtered Data</h3>
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Score</th>
+                            <th>Episodes</th>
+                            <th>Members</th>
+                            <th>Year</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
